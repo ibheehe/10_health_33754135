@@ -3,36 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Gold Health</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="<%= basePath %>/style.css">
 </head>
 <body>
 
 <header class="home-header">
-    <h1>Gold Health</h1>
-    <div class="health-icon">+</div>
+    <h1>Gold Health <span class="health-icon">+</span></h1>
+    <nav>
+        <a href="<%= basePath %>/">Home</a> |
+        <a href="<%= basePath %>/users/login">Login</a> |
+        <a href="<%= basePath %>/users/register">Register</a> |
+        <a href="<%= basePath %>/health/list">My Entries</a>
+    </nav>
 </header>
 
+<main>
+    <section class="home-intro">
+        <p>Track your daily health, workouts, meals, and habits easily with Gold Health. Keep your wellness journey organized and private.</p>
+    </section>
+</main>
 
-    <header>
-        <h1>Gold Health <span class="health-icon">+</span></h1>
-        <nav>
-            <a href="/">Home</a> |
+<footer>
+    <p>&copy; 2025 Gold Health</p>
+</footer>
 
-            <a href="<%= basePath %>/users/login">Login</a>
-            <a href="<%= basePath %>/users/register">Register</a>
-            <a href="<%= basePath %>/health/list">My Entries</a>
-
-        </nav>
-    </header>
-
-    <main>
-        <section class="home-intro">
-            <p>Track your daily health, workouts, meals, and habits easily with Gold Health. Keep your wellness journey organized and private.</p>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Gold Health</p>
-    </footer>
 </body>
 </html>
