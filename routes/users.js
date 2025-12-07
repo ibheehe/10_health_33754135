@@ -7,13 +7,11 @@ const saltRounds = 10;
 // Middleware to protect pages
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
-        // Use relative path
-        res.redirect('./login'); 
+        res.redirect('./login'); // relative redirect
     } else {
         next();
     }
 };
-
 
 //login page
 router.get('/login', (req, res) => {

@@ -10,63 +10,52 @@ const mysql = require('mysql2');
 const app = express();
 const port = 8000;
 
+
 app.use(express.urlencoded({ extended: true }));
 
 // Sanitizer
 app.use(expressSanitizer());
 
-// Public folder
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Session
-app.use(
-    session({
-        secret: 'somegoldsecret',
-        resave: false,
-        saveUninitialized: false,
-        cookie: { maxAge: 600000 }
-    })
-);
 
-// EJS
+app.use(session({
+    secret: 'somegoldsecret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { expires: 600000 }
+}));
+
+
 app.set('view engine', 'ejs');
 
 // Application data
 app.locals.appData = { appName: "Gold Health" };
 
-// Database
+//database
 const db = mysql.createPool({
     host: 'localhost',
-    user: 'health_app',
-    password: 'qwertyuiop',
-    database: 'health',
+    user: 'health_app',        
+    password: 'qwertyuiop',    
+    database: 'health',        
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
 });
 global.db = db;
 
-
-// -----------------------------
-// ROUTES (ORDER MATTERS)
-// -----------------------------
-
-// Main homepage
+//routes
 const mainRoutes = require('./routes/main');
 app.use('/', mainRoutes);
 
-// Users routes (login, register)
 const usersRoutes = require('./routes/users');
 app.use('/users', usersRoutes);
 
-// Health routes (list/add/search)
 const healthRoutes = require('./routes/health');
 app.use('/health', healthRoutes);
 
-
-// -----------------------------
-// START SERVER
-// -----------------------------
+//start server on port 8000
 app.listen(port, () => {
-    console.log(`Gold Health app running on http://localhost:${port}`);
+    console.log(`Gold Health app running on port ${port}!`);
 });
