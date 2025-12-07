@@ -66,29 +66,25 @@ router.post(
     redirectLogin,
     [
         check("title").notEmpty().withMessage("Title is required"),
-        check("details").notEmpty().withMessage("Details are required"),
-        check("date").notEmpty().withMessage("Date is required")
+        check("details").notEmpty().withMessage("Details are required")
     ],
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.render("add", { 
-                errors: errors.array(),
-                title: req.body.title,
-                details: req.body.details,
-                date: req.body.date
-            });
+            return res.render("add", { errors: errors.array() });
         }
 
-        const { title, details, date } = req.body;
+        const { title, details } = req.body;
 
-        const sqlquery = "INSERT INTO health_entries (user_id, title, details, date) VALUES (?, ?, ?, ?)";
-        db.query(sqlquery, [req.session.userId, title, details, date], (err, result) => {
+        // Insert with user_id, title, details; date is automatic
+        const sqlquery = "INSERT INTO health_entries (user_id, title, details) VALUES (?, ?, ?)";
+        db.query(sqlquery, [req.session.userId, title, details], (err, result) => {
             if (err) return next(err);
             res.redirect("/health/list");
         });
     }
 );
+
 
 
 module.exports = router;
