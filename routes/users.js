@@ -7,11 +7,11 @@ const saltRounds = 10;
 // Middleware to protect pages
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
-        res.redirect('/users/login');
-    } else {
-        next();
+        return res.redirect(`${req.app.locals.basePath}/users/login`);
     }
+    next();
 };
+
 
 //login page
 router.get('/login', (req, res) => {
