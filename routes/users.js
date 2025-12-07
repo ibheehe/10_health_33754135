@@ -1,105 +1,91 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const { check, validationResult } = require('express-validator');
-const saltRounds = 10;
+const { check, validationResult } = require("express-validator");
 
-// Middleware to protect pages
+// Middleware to protect pages that require login
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
-        return res.redirect(`${req.app.locals.basePath}/users/login`);
+        return res.redirect('./../users/login'); // relative path
     }
     next();
 };
 
-
-//login page
-router.get('/login', (req, res) => {
-    res.render('login.ejs');
+//home page
+router.get("/", (req, res) => {
+    res.render("index"); 
 });
 
-//login handler
-router.post('/login', (req, res, next) => {
-    const username = req.body.username;
-    const password = req.body.password;
+//about page
+router.get("/about", (req, res) => {
+    res.render("about");
+});
 
-    // gold / smith
-    if (username === "gold" && password === "smiths") {
-        req.session.userId = 0; 
-        return res.render('loggedin.ejs', { message: "Login successful!" });
-    }
+//search page
+router.get("/search", redirectLogin, (req, res) => {
+    res.render("search");
+});
 
-    
-    const sqlquery = "SELECT id, username, password FROM users WHERE username = ?";
-    global.db.query(sqlquery, [username], (err, results) => {
+//search results for specific users
+router.get("/search-result", redirectLogin, (req, res, next) => {
+    const keyword = req.query.keyword;
+
+    const sqlquery = `
+        SELECT * 
+        FROM health_entries 
+        WHERE user_id = ? AND (title LIKE ? OR details LIKE ?)
+    `;
+
+    db.query(sqlquery, [req.session.userId, `%${keyword}%`, `%${keyword}%`], (err, results) => {
         if (err) return next(err);
 
-        if (results.length === 0) return res.send("Login failed: user not found");
-
-        const hashedPassword = results[0].password;
-        bcrypt.compare(password, hashedPassword, (err, match) => {
-            if (err) return next(err);
-
-            if (match) {
-                // stores users ID.
-                req.session.userId = results[0].id;
-                res.render('loggedin.ejs', { message: "Login successful!" });
-            } else {
-                res.send("Login failed: incorrect password");
-            }
+        res.render("search_result", {
+            results: results,
+            keyword: keyword
         });
     });
 });
 
+//list for logged in users
+router.get("/list", redirectLogin, (req, res, next) => {
+    const sqlquery = "SELECT * FROM health_entries WHERE user_id = ? ORDER BY id DESC";
+    db.query(sqlquery, [req.session.userId], (err, results) => {
+        if (err) return next(err);
 
-// logout
-router.get('/logout', redirectLogin, (req, res) => {
-    req.session.destroy(err => {
-        if (err) return res.redirect('/');
-        res.redirect('/');  // redirect to home page after logout
+        res.render("list", { entries: results });
     });
 });
 
-//register page
-router.get('/register', (req, res) => {
-    res.render('register.ejs');
+//entry form
+router.get("/add", redirectLogin, (req, res) => {
+    res.render("add"); // add.ejs form
 });
 
-//registered handler
-router.post('/registered',
+//post handler
+router.post(
+    "/add",
+    redirectLogin,
     [
-        check('username').isLength({ min: 5, max: 20 }).withMessage('Username must be 5-20 characters'),
-        check('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
-        check('email').isEmail().withMessage('Enter a valid email')
+        check("title").notEmpty().withMessage("Title is required"),
+        check("details").notEmpty().withMessage("Details are required"),
+        check("date").notEmpty().withMessage("Date is required")
     ],
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.render('register.ejs', { errors: errors.array() });
+            return res.render("add", { 
+                errors: errors.array(),
+                title: req.body.title,
+                details: req.body.details,
+                date: req.body.date
+            });
         }
 
-        const username = req.sanitize(req.body.username);
-        const email = req.sanitize(req.body.email);
-        const password = req.body.password;
+        const { title, details, date } = req.body;
 
-        // Hash the password
-        bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+        const sqlquery = "INSERT INTO health_entries (user_id, title, details, date) VALUES (?, ?, ?, ?)";
+        db.query(sqlquery, [req.session.userId, title, details, date], (err, result) => {
             if (err) return next(err);
-
-            const sql = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
-            const values = [username, hashedPassword, email];
-
-            global.db.query(sql, values, (err, result) => {
-                if (err) {
-                    if (err.code === 'ER_DUP_ENTRY') {
-                        return res.render('register.ejs', { errors: [{ msg: 'Username or email already exists' }] });
-                    }
-                    return next(err);
-                }
-
-                // Registration success
-                res.send(`User ${username} registered successfully! <a href="/users/login">Login here</a>`);
-            });
+            res.redirect('./list'); // relative redirect
         });
     }
 );

@@ -5,11 +5,10 @@ const { check, validationResult } = require("express-validator");
 // Middleware to protect pages that require login
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
-        return res.redirect(`${req.app.locals.basePath}/users/login`);
+        return res.redirect('/users/login');
     }
     next();
 };
-
 
 //home page
 router.get("/", (req, res) => {
