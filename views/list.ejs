@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Your Health Entries - Gold Health</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <h1>Gold Health</h1>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/health/add">Add Entry</a> |
+            <a href="/health/search">Search Entries</a> |
+            <a href="/users/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Your Health Entries</h2>
+
+        <% if (entries.length === 0) { %>
+            <p>You haven't added any health entries yet. <a href="/health/add">Add one now</a>.</p>
+        <% } else { %>
+            <ul class="entries">
+                <% entries.forEach(entry => { %>
+                    <li>
+                        <strong><%= entry.title %></strong> 
+                        (<%= entry.date ? new Date(entry.date).toLocaleDateString() : 'No date' %>)
+                        <p><%= entry.details %></p>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Gold Health</p>
+    </footer>
+</body>
+</html>

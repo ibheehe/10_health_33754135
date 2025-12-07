@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results - Gold Health</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <h1>Gold Health</h1>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/health/add">Add Entry</a> |
+            <a href="/health/list">View Entries</a> |
+            <a href="/users/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Search Results for "<%= keyword %>"</h2>
+
+        <% if (results.length === 0) { %>
+            <p>No entries matched your search.</p>
+        <% } else { %>
+            <ul class="entries">
+                <% results.forEach(entry => { %>
+                    <li>
+                        <strong><%= entry.title %></strong> 
+                        (<%= new Date(entry.date).toLocaleDateString() %>)<br>
+                        <p><%= entry.details %></p>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
+
+        <a href="/health/list">Return to your entries</a>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Gold Health</p>
+    </footer>
+</body>
+</html>

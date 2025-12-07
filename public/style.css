@@ -1,0 +1,179 @@
+/* General Styles */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #1c1c1c; 
+    color: #f5f5f5; 
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    background-color: #d4af37; 
+    color: black;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Navigation */
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    color: black;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Main Content */
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #2b2b2b; 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+/* Headings */
+h2 {
+    color: #d4af37; 
+    margin-top: 0;
+}
+
+/* Forms */
+form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="date"],
+form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #d4af37; 
+    border-radius: 4px;
+    background-color: #1c1c1c; 
+    color: #f5f5f5; 
+    box-sizing: border-box;
+}
+
+form button {
+    margin-top: 15px;
+    background-color: #d4af37; 
+    color: black;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button:hover {
+    background-color: #b7942e; 
+}
+
+/* Error messages */
+.errors {
+    list-style: none;
+    padding: 0;
+    color: #f5f5f5;
+    background-color: #b71c1c; 
+    border: 1px solid #f5f5f5;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* Entries List */
+ul.entries {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul.entries li {
+    background-color: #2b2b2b;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-left: 4px solid #d4af37; 
+    border-radius: 4px;
+}
+
+ul.entries li p {
+    margin: 5px 0 0 0;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px 0;
+    background-color: #1c1c1c;
+    color: #d4af37;
+    margin-top: 20px;
+}
+
+
+
+
+
+
+
+
+
+header h1 {
+    font-size: 2em;
+    color: #d4af37;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.health-icon {
+    color: #28a745; /* green plus */
+    font-weight: bold;
+    margin-left: 10px;
+    font-size: 1.5em;
+}
+
+
+.home-intro {
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
+    font-size: 1.2em;
+    color: #f5f5f5;
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+/* title */
+
+.home-header {
+    background-color: black;
+    color: gold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.home-header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
