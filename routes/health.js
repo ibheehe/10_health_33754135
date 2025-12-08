@@ -87,7 +87,10 @@ router.post(
         const sqlquery = "INSERT INTO health_entries (user_id, title, details, date) VALUES (?, ?, ?, ?)";
         db.query(sqlquery, [req.session.userId, title, details, date], (err, result) => {
             if (err) return next(err);
-            res.redirect(req.baseUrl + "/list");  // works on localhost and VM
+
+            // Compute base path by removing /health from req.baseUrl
+            const basePath = req.baseUrl.replace(/\/health$/, '');
+            res.redirect(basePath + "/health/list"); // VM-safe redirect
         });
     }
 );
