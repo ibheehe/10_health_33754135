@@ -6,7 +6,7 @@ const saltRounds = 10;
 
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
-        return res.redirect('./login'); // relative to the current route
+        return res.redirect('./users/login'); 
     }
     next();
 };
