@@ -72,7 +72,7 @@ router.get('/register', (req, res) => {
 router.post('/registered',
     [
         check('username').isLength({ min: 4, max: 20 }).withMessage('Username must be 4-20 characters'),
-        check('password').isLength({ min: 4 }).withMessage('Password must be at least 8 characters'),
+        check('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
         check('email').isEmail().withMessage('Enter a valid email')
     ],
     (req, res, next) => {
