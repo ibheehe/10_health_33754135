@@ -88,9 +88,8 @@ router.post(
         db.query(sqlquery, [req.session.userId, title, details, date], (err, result) => {
             if (err) return next(err);
 
-            // Compute base path by removing /health from req.baseUrl
-            const basePath = req.baseUrl.replace(/\/health$/, '');
-            res.redirect(basePath + "/health/list"); // VM-safe redirect
+            // Use a relative redirect from the current router
+            res.redirect("./list");  
         });
     }
 );
