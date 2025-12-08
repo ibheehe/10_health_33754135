@@ -1,0 +1,6 @@
+home=https://www.doc.gold.ac.uk/usr/379/
+login=https://www.doc.gold.ac.uk/usr/379/users/login
+health_list=https://www.doc.gold.ac.uk/usr/379/health/list
+health_add=https://www.doc.gold.ac.uk/usr/379/health/add
+about=
+

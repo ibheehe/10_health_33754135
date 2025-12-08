@@ -3,15 +3,73 @@
 <head>
     <title>About Gold Health</title>
     <link rel="stylesheet" href="/style.css">
+    <style>
+        .about-container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #ffffffcc;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>About Gold Health</h1>
-    <nav>
-        <a href="/">Home</a> |
-        <a href="/health/search">Search Entries</a> |
-        <a href="/health/list">View Entries</a> |
-        <a href="/users/login">Login</a>
-    </nav>
-    <p>Gold Health is a simple app to track your health entries. Add your meals, workouts, mood, or daily habits and search your logs easily.</p>
+
+    <div class="about-container">
+        <h1>About Gold Health</h1>
+
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/health/search">Search Entries</a> |
+            <a href="/health/list">View Entries</a> |
+            <a href="/users/login">Login</a>
+        </nav>
+
+        <p>
+            <strong>Gold Health</strong> is a simple and easy-to-use application designed to help you
+            track your daily health activities. Whether you're recording meals, workouts, sleep,
+            mood, symptoms, or other habits, the app keeps everything organised in one place.
+        </p>
+
+        <p class="section-title">What You Can Do:</p>
+        <ul>
+            <li>Add new health entries quickly</li>
+            <li>View all your past logs at any time</li>
+            <li>Search entries by keywords or details</li>
+            <li>Keep track of your progress over time</li>
+        </ul>
+
+        <p>
+            The goal of Gold Health is to make personal health tracking simple, accessible,
+            and stress-free — helping you stay consistent and understand your habits better.
+        </p>
+    </div>
+
 </body>
 </html>
