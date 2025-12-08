@@ -2,10 +2,15 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 
-// import shared middleware
-const redirectLogin = require("../middleware/redirectLogin");
+// Middleware to protect pages that require login
+const redirectLogin = (req, res, next) => {
+    if (!req.session.userId) {
+        return res.redirect('./users/login'); 
+    }
+    next();
+};
 
-//home
+
 router.get("/", (req, res) => {
     res.render("index"); 
 });
@@ -52,7 +57,7 @@ router.get("/list", redirectLogin, (req, res, next) => {
 
 //entry form
 router.get("/add", redirectLogin, (req, res) => {
-    res.render("add");
+    res.render("add"); // add.ejs form
 });
 
 //post handler
@@ -84,5 +89,6 @@ router.post(
         });
     }
 );
+
 
 module.exports = router;
