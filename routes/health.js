@@ -3,12 +3,13 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator");
 
 // Middleware to protect pages that require login
-const redirectLogin = (req, res, next) => {
-    if (!req.session.userId) {
-        return res.redirect('./users/login'); 
-    }
-    next();
-};
+const redirectLogin = require('../middleware/redirectLogin');
+
+// Example protected route:
+router.get('/list', redirectLogin, (req, res) => {
+    ...
+});
+
 
 
 router.get("/", (req, res) => {
