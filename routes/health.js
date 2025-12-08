@@ -67,8 +67,7 @@ router.post(
     redirectLogin,
     [
         check("title").notEmpty().withMessage("Title is required"),
-        check("details").notEmpty().withMessage("Details are required"),
-        check("date").notEmpty().withMessage("Date is required")
+        check("details").notEmpty().withMessage("Details are required")
     ],
     (req, res, next) => {
         const errors = validationResult(req);
@@ -76,12 +75,14 @@ router.post(
             return res.render("add", { 
                 errors: errors.array(),
                 title: req.body.title,
-                details: req.body.details,
-                date: req.body.date
+                details: req.body.details
             });
         }
 
-        const { title, details, date } = req.body;
+        const { title, details } = req.body;
+
+        // Set date automatically to today in YYYY-MM-DD format
+        const date = new Date().toISOString().split('T')[0];
 
         const sqlquery = "INSERT INTO health_entries (user_id, title, details, date) VALUES (?, ?, ?, ?)";
         db.query(sqlquery, [req.session.userId, title, details, date], (err, result) => {

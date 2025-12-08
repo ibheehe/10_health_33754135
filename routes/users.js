@@ -51,12 +51,17 @@ router.post('/login', (req, res, next) => {
 });
 
 // logout
-router.get('/logout', redirectLogin, (req, res) => {
+router.get('/logout', (req, res) => {
     req.session.destroy(err => {
-        if (err) return res.redirect('./'); // relative path
-        res.redirect('./');  // relative redirect to home
+        if (err) {
+            // If there’s an error destroying the session, fallback to login
+            return res.redirect('/users/login');
+        }
+        // Render the logout page
+        res.render('logout');  // uses logout.ejs
     });
 });
+
 
 //register page
 router.get('/register', (req, res) => {
