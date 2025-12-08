@@ -5,10 +5,18 @@ const { check, validationResult } = require("express-validator");
 // Middleware to protect pages that require login
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
-        return res.redirect('/users/login');  // corrected path
+        // Get the app prefix from the current router
+        // e.g., req.baseUrl might be '/usr/379/health' on the VM
+        // Remove '/health' to get the base path
+        let basePath = req.baseUrl.replace(/\/health$/, '');
+
+        // Redirect to login page in users router
+        return res.redirect(`${basePath}/users/login`);
     }
     next();
 };
+
+module.exports = redirectLogin;
 
 //home
 router.get("/", (req, res) => {

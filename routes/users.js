@@ -4,14 +4,14 @@ const bcrypt = require('bcrypt');
 const { check, validationResult } = require('express-validator');
 const saltRounds = 10;
 
-// Middleware to protect pages
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
-        res.redirect('./login'); // relative redirect
-    } else {
-        next();
+        return res.redirect('./login'); // relative to the current route
     }
+    next();
 };
+
+
 
 //login page
 router.get('/login', (req, res) => {
