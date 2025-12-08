@@ -5,7 +5,7 @@ const { check, validationResult } = require("express-validator");
 // Middleware to protect pages that require login
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
-        return res.redirect('../users/login'); // moves up to /usr/379/users/login
+        return res.redirect('../users/login');
     }
     next();
 };
@@ -58,7 +58,7 @@ router.get("/list", redirectLogin, (req, res, next) => {
 
 //entry form
 router.get("/add", redirectLogin, (req, res) => {
-    res.render("add"); // add.ejs form
+    res.render("add"); 
 });
 
 //post handler
@@ -81,14 +81,14 @@ router.post(
 
         const { title, details } = req.body;
 
-        // Set date automatically to today in YYYY-MM-DD format
+        // Set date 
         const date = new Date().toISOString().split('T')[0];
 
         const sqlquery = "INSERT INTO health_entries (user_id, title, details, date) VALUES (?, ?, ?, ?)";
         db.query(sqlquery, [req.session.userId, title, details, date], (err, result) => {
             if (err) return next(err);
 
-            // Use a relative redirect from the current router
+            
             res.redirect("./list");  
         });
     }

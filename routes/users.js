@@ -54,11 +54,11 @@ router.post('/login', (req, res, next) => {
 router.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
-            // If there’s an error destroying the session, fallback to login
+            
             return res.redirect('/users/login');
         }
-        // Render the logout page
-        res.render('logout');  // uses logout.ejs
+        
+        res.render('logout');  
     });
 });
 
