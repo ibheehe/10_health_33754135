@@ -23,11 +23,11 @@ router.post('/login', (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    // gold / smith
-    if (username === "gold" && password === "smiths") {
-        req.session.userId = 0; 
-        return res.render('loggedin.ejs', { message: "Login successful!" });
-    }
+    // // gold / smith
+    // if (username === "gold" && password === "smiths") {
+    //     req.session.userId = 0; 
+    //     return res.render('loggedin.ejs', { message: "Login successful!" });
+    // }
 
     const sqlquery = "SELECT id, username, password FROM users WHERE username = ?";
     global.db.query(sqlquery, [username], (err, results) => {
